@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flashcart_app/models/product.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flashcart_app/widgets/full_screen_image.dart'; 
+import 'package:flashcart_app/widgets/full_screen_image.dart';
 
 class ShoppingListTab extends StatelessWidget {
-  final List<Product> productData; 
+  final List<Product> productData;
   final Function(int) onTogglePurchased;
   final Function(int) onDeleteItem;
   final Function(int) onIncrementItemCount;
+  final Function(int) onDecrementItemCount;
+
   final BuildContext context;
   final bool isLoading; // Receive isLoading from the parent
 
@@ -19,6 +21,7 @@ class ShoppingListTab extends StatelessWidget {
     required this.onTogglePurchased,
     required this.onDeleteItem,
     required this.onIncrementItemCount,
+    required this.onDecrementItemCount,
     required this.context,
     required this.isLoading,
   });
@@ -47,7 +50,8 @@ class ShoppingListTab extends StatelessWidget {
     }
   }
 
- Widget _buildProductCard(Product product, int index) {  // Changed parameter type to Product
+  Widget _buildProductCard(Product product, int index) {
+    // Changed parameter type to Product
     return Card(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,9 +63,11 @@ class ShoppingListTab extends StatelessWidget {
     );
   }
 
-  Widget _buildImageThumbnail(Product product) { // Changed parameter type to Product
+  Widget _buildImageThumbnail(Product product) {
+    // Changed parameter type to Product
     return InkWell(
-      onTap: () => _viewImageFullScreen(product.image),  // Access image property directly
+      onTap: () =>
+          _viewImageFullScreen(product.image), // Access image property directly
       child: SizedBox(
         width: 100, // Adjusted size for shopping list tab
         height: 100,
@@ -73,28 +79,44 @@ class ShoppingListTab extends StatelessWidget {
     );
   }
 
-  Widget _buildProductDetails(Product product, int index) { // Changed to Product type
+  Widget _buildProductDetails(Product product, int index) {
+    // Changed to Product type
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(1.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MarkdownBody(data: product.description), // Access properties using dot notation
+            MarkdownBody(
+                data: product
+                    .description), // Access properties using dot notation
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Checkbox(
-                  value: product.isPurchased, 
-                  onChanged: (value) => onTogglePurchased(index), 
+                  value: product.isPurchased,
+                  onChanged: (value) => onTogglePurchased(index),
                 ),
                 const SizedBox(width: 1),
-                Text('${product.itemCount}'), 
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () => onIncrementItemCount(index),
+                Text('${product.itemCount}'),
+                Row(
+                  // Wrap buttons in a Row for better spacing
+                  children: [
+                    IconButton(
+                      // Decrement button
+                      icon: const Icon(Icons.remove),
+                      onPressed:
+                          product.itemCount > 1 // Enable only if count > 1
+                              ? () => onDecrementItemCount(index)
+                              : null,
+                    ),
+                    const SizedBox(width: 1),
+                    IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: () => onIncrementItemCount(index),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 1),
               ],
             ),
           ],

@@ -75,7 +75,11 @@ class PurchasedListTab extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 const SizedBox(width: 1),
-                Text('${product.itemCount}'),
+                Text(
+                  product.itemCount > 1 // Conditional text based on itemCount
+                      ? 'Purchased ${product.itemCount} items'
+                      : 'Purchased ${product.itemCount} item',
+                ),
                 const SizedBox(width: 1),
               ],
             ),

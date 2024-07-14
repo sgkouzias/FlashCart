@@ -30,7 +30,7 @@ final generativeModelConfig = GenerativeModelConfig(
   generationConfig: GenerationConfig(
       temperature: 0.95,
       topP: 0.95,
-      topK: 40,
+      topK: 50,
       responseMimeType: 'text/plain'), // Use the imported GenerationConfig
 );
 

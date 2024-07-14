@@ -40,10 +40,6 @@ class _FlashCartAppState extends State<FlashCartApp> {
         _images.addAll(pickedImages);
       });
 
-      // Introduce a slight delay before setting _isLoading to true
-      await Future.delayed(
-          const Duration(milliseconds: 50)); // Adjust delay if needed
-
       setState(() {
         _isLoading = true;
       });
@@ -169,18 +165,14 @@ class _FlashCartAppState extends State<FlashCartApp> {
                     _productData.removeAt(index);
                   });
                 },
-                onIncrementItemCount: (int index) {
-                  setState(() {
-                    _productData[index].itemCount++;
-                  });
-                },
-                isLoading: _isLoading, // Pass the isLoading state
-                context: context,
+                onIncrementItemCount: _incrementItemCount,
+                onDecrementItemCount: _decrementItemCount,
+                context: context, // Make sure to pass the context here
+                isLoading: _isLoading, // Pass isLoading here
               ),
               PurchasedListTab(
-                // Use the PurchasedListTab widget
                 productData: _productData,
-                context: context, // Pass the context
+                context: context,
               ),
             ],
           ),
@@ -204,6 +196,22 @@ class _FlashCartAppState extends State<FlashCartApp> {
       // Hide the button in all other cases (loading or images present)
       return null;
     }
+  }
+
+  // Callback to increment item count
+  void _incrementItemCount(int index) {
+    setState(() {
+      _productData[index].itemCount++;
+    });
+  }
+
+  // Add the _decrementItemCount function here
+  void _decrementItemCount(int index) {
+    setState(() {
+      if (_productData[index].itemCount > 1) {
+        _productData[index].itemCount--;
+      }
+    });
   }
 
   void _togglePurchased(int index) {
