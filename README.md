@@ -8,9 +8,16 @@ Before you run this app, please make sure to create a **vars.env** file in the r
 ```bash
 GOOGLE_API_KEY=YOUR_API_KEY
 ```
-**Important:** Do NOT commit the `vars.env` file to your version control system (e.g., Git). It contains sensitive information that should be kept private.
+**Caution:** Do NOT commit the `vars.env` file to your version control system (e.g., Git). It contains sensitive information that should be kept private.
 
-## General Instructions
+## Setup
+
+1. Create a new Flutter project: `flutter create <project_name>`
+2. Clone this repository: `git clone <repository_url>`
+3. Install dependencies: `flutter pub get`
+4. Run the app: `flutter run`
+
+## Usage
 
 FlashCart makes your shopping experience easier by using artificial intelligence to generate product descriptions based on images. Here's how to use it:
 
@@ -37,8 +44,7 @@ FlashCart makes your shopping experience easier by using artificial intelligence
 * **Error Handling:** If there's an issue with image processing or description generation (e.g., due to a poor internet connection or an unrecognized product), you'll see an error message. You can usually retry the process.
 * **Adding More Photos:** You can add more photos to your list at any time by tapping the "Add Photos" button again.
 
-## Additional Tips:
+## Tips:
 
 * Experiment with different lighting conditions and angles when taking photos to find what works best.
-* If FlashCart doesn't recognize a product, you can manually add a description by tapping the "Edit" icon next to the item.
-* Take advantage of FlashCart's integration with Google services (if applicable) to enhance your shopping experience further.
+* **Removing Photos:** If you accidentally add a photo of a product you don't want on your list, simply swipe left or right on the item to remove it.
