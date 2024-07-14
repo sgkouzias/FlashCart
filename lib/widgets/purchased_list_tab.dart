@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flashcart_app/models/product.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flashcart_app/widgets/full_screen_image.dart';
-import 'package:flashcart_app/models/product.dart';
-import 'package:image_picker/image_picker.dart';
+
 
 class PurchasedListTab extends StatelessWidget {
   final List<Product> productData;
