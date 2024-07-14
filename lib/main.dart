@@ -32,56 +32,55 @@ class _FlashCartAppState extends State<FlashCartApp> {
   final prompt = suppliesSpecialist;
 
   Future<void> _pickImages() async {
+    if (_isLoading) {
+      return; // Prevent picking images while loading
+    }
+
     final ImagePicker picker = ImagePicker();
     final List<XFile> pickedImages = await picker.pickMultiImage();
 
     if (pickedImages.isNotEmpty) {
       setState(() {
         _images.addAll(pickedImages);
+        _isLoading = true; // Start loading when images are picked
       });
 
-      setState(() {
-        _isLoading = true;
-      });
-
-      _generateDescriptions();
+      await _generateDescriptions();
+      setState(() => _isLoading =
+          false); // Set loading to false after descriptions are generated
     }
   }
 
   Future<void> _generateDescriptions() async {
-    setState(() {
-      _isLoading = true;
-    });
-    _productData.clear();
-
-    final imageParts = await Future.wait(
-      _images.map(processImage), // Use the extracted function
-    );
-
+    final imageParts = await Future.wait(_images.map(processImage));
     try {
       final response = await widget.model.generateContent([
         Content.multi([TextPart(prompt), ...imageParts]),
       ]);
 
-      final descriptions = response.text?.split('---');
-      if (descriptions != null && descriptions.length == _images.length) {
-        for (var i = 0; i < _images.length; i++) {
-          final description =
-              descriptions[i].trim(); // Get description at correct index
-          if (description
-                  .isNotEmpty && // Check if description is not empty or null
-              description != 'e') {
-            _productData.add(Product(
-              // Create a Product object directly
-              image: _images[i],
-              description: description,
-            ));
-          }
-        }
-      } else {
+      final descriptions = response.text?.split('---') ?? [];
+
+      if (descriptions.length != _images.length) {
         throw Exception(
             "Error: Number of descriptions doesn't match number of images.");
       }
+
+      setState(() {
+        // Rebuild the entire productData list
+        _productData.clear();
+        for (var i = 0; i < descriptions.length; i++) {
+          final description = descriptions[i].trim();
+          if (description.isNotEmpty && description != 'e') {
+            _productData.add(
+              Product(
+                image: _images[i],
+                description: description,
+              ),
+            );
+          }
+        }
+        _isLoading = false;
+      });
     } catch (e) {
       // Store the snackbar message for later use
       String snackbarMessage = 'Error: $e. Please try again.';
@@ -122,66 +121,75 @@ class _FlashCartAppState extends State<FlashCartApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FlashCart⚡',
-      home: DefaultTabController(
-        length: 2, // Two tabs: To Buy and Purchased
-        child: Scaffold(
-          appBar: AppBar(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/logo.svg',
-                  height: 50,
+        title: 'FlashCart⚡',
+        home: DefaultTabController(
+          length: 2, // Two tabs: To Buy and Purchased
+          child: Scaffold(
+            appBar: AppBar(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/logo.svg',
+                    height: 50,
+                  ),
+                  const SizedBox(width: 8),
+                  const Text('FlashCart'),
+                ],
+              ),
+              bottom: const TabBar(
+                tabs: [
+                  Tab(text: 'To Buy'),
+                  Tab(text: 'Purchased'),
+                ],
+              ),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.exit_to_app),
+                  onPressed: () {
+                    // Exit the app
+                    exit(0);
+                  },
                 ),
-                const SizedBox(width: 8),
-                const Text('FlashCart'),
               ],
             ),
-            bottom: const TabBar(
-              tabs: [
-                Tab(text: 'To Buy'),
-                Tab(text: 'Purchased'),
+            body: Stack(
+              children: [
+                TabBarView(
+                  children: [
+                    ShoppingListTab(
+                      productData: _productData,
+                      onTogglePurchased: _togglePurchased,
+                      onDeleteItem: (index) {
+                        setState(() {
+                          _images.removeAt(index);
+                          _productData.removeAt(index);
+                        });
+                      },
+                      onIncrementItemCount: _incrementItemCount,
+                      onDecrementItemCount: _decrementItemCount,
+                      context: context, // Make sure to pass the context here
+                      isLoading: _isLoading, // Pass isLoading here
+                    ),
+                    PurchasedListTab(
+                      productData: _productData,
+                      context: context,
+                    ),
+                  ],
+                ),
+                if (_isLoading)
+                  const Center(child: CircularProgressIndicator()),
               ],
             ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.exit_to_app),
-                onPressed: () {
-                  // Exit the app
-                  exit(0);
-                },
-              ),
-            ],
+            floatingActionButton: FloatingActionButton(
+              // Always show the button
+              onPressed: _pickImages,
+              child: const Icon(Icons.add_a_photo),
+            ),
+
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           ),
-          body: TabBarView(
-            children: [
-              ShoppingListTab(
-                productData: _productData,
-                onTogglePurchased: _togglePurchased,
-                onDeleteItem: (index) {
-                  setState(() {
-                    _images.removeAt(index);
-                    _productData.removeAt(index);
-                  });
-                },
-                onIncrementItemCount: _incrementItemCount,
-                onDecrementItemCount: _decrementItemCount,
-                context: context, // Make sure to pass the context here
-                isLoading: _isLoading, // Pass isLoading here
-              ),
-              PurchasedListTab(
-                productData: _productData,
-                context: context,
-              ),
-            ],
-          ),
-          floatingActionButton: _buildFloatingActionButton(),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-        ),
-      ),
-    );
+        ));
   }
 
   // FloatingActionButton builder

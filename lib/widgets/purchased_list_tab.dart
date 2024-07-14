@@ -68,20 +68,17 @@ class PurchasedListTab extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MarkdownBody(
-                data: product
-                    .description), // Access properties using dot notation
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                const SizedBox(width: 1),
-                Text(
-                  product.itemCount > 1 // Conditional text based on itemCount
-                      ? 'Purchased ${product.itemCount} items'
-                      : 'Purchased ${product.itemCount} item',
-                ),
-                const SizedBox(width: 1),
-              ],
+            MarkdownBody(data: product.description),
+            Align(
+              // Use Align to position the text
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                product.itemCount > 1
+                    ? 'Purchased ${product.itemCount} items'
+                    : 'Purchased ${product.itemCount} item',
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold), // Make it bold
+              ),
             ),
           ],
         ),
