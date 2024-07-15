@@ -5,7 +5,6 @@ import 'package:flashcart_app/models/product.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flashcart_app/widgets/full_screen_image.dart';
 
-
 class PurchasedListTab extends StatelessWidget {
   final List<Product> productData;
   final BuildContext context; // Added for Navigator
@@ -39,6 +38,7 @@ class PurchasedListTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _buildImageThumbnail(product),
+          const SizedBox(width: 5),
           _buildProductDetails(product),
         ],
       ),

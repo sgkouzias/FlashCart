@@ -62,6 +62,7 @@ class ShoppingListTab extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _buildImageThumbnail(product),
+            const SizedBox(width: 5),
             _buildProductDetails(product, index),
           ],
         ),
