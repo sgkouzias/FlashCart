@@ -1,4 +1,16 @@
-# FlashCart
+<div align="left">
+  <img src="assets/icon/app_icon.png" alt="FlashCart Logo" width="150">
+  <h1>FlashCart</h1>
+</div>
+
+
+
+
+
+
+Your AI-Powered Shopping Companion
+
+
 FlashCart⚡ is a Flutter app that leverages Google's Gemini AI to transform images of consumable products into a smart shopping list. 
 
 ## ⚠️ Disclaimer ⚠️
