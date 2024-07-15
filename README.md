@@ -10,7 +10,7 @@
 
 Your AI-Powered Shopping Companion
 
-### Disclaimer
+## Disclaimer ⚠️ 
 
 > This application was developed as a submission for the Gemini API Developer Competition. It is not intended for commercial use and is provided for demonstration purposes only.
 
@@ -33,7 +33,7 @@ API_KEY=YOUR_API_KEY
 3. Install dependencies: `flutter pub get`
 4. Run the app: `flutter run`
 
-## Usage
+## Getting Started 
 
 FlashCart makes your shopping experience easier by using artificial intelligence to generate product descriptions based on images. Here's how to use it:
 
