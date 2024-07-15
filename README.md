@@ -6,7 +6,7 @@ FlashCart⚡ is a Flutter app that leverages Google's Gemini AI to transform ima
 Before you run this app, please make sure to create a **vars.env** file in the root directory of this project. This file should contain your Google API key:
 
 ```bash
-GOOGLE_API_KEY=YOUR_API_KEY
+API_KEY=YOUR_API_KEY
 ```
 **Caution:** Do NOT commit the `vars.env` file to your version control system (e.g., Git). It contains sensitive information that should be kept private.
 
@@ -43,8 +43,9 @@ FlashCart makes your shopping experience easier by using artificial intelligence
 * **Internet Connection:** FlashCart requires an internet connection to process images and generate descriptions.
 * **Error Handling:** If there's an issue with image processing or description generation (e.g., due to a poor internet connection or an unrecognized product), you'll see an error message. You can usually retry the process.
 * **Adding More Photos:** You can add more photos to your list at any time by tapping the "Add Photos" button again.
+* **Removing Photos:** If you accidentally add a photo of a product you don't want on your list, simply swipe left or right on the item to remove it.
 
 ## Tips:
 
 * Experiment with different lighting conditions and angles when taking photos to find what works best.
-* **Removing Photos:** If you accidentally add a photo of a product you don't want on your list, simply swipe left or right on the item to remove it.
+* **Capture the Details:** When taking pictures, make sure to capture the product's brand name, logo, and any other relevant details, just like you would if you were showing the image to a salesperson to purchase the item.
