@@ -2,7 +2,7 @@ import 'package:image_picker/image_picker.dart';
 
 class Product {
   final XFile image;
-  final String description;
+  String description;
   bool isPurchased;
   int itemCount;
 

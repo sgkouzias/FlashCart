@@ -39,7 +39,7 @@ class _FlashCartAppState extends State<FlashCartApp> {
   final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
   final List<XFile> _images = [];
-  final List<Product> _productData = [];
+  List<Product> _productData = [];
   bool _isLoading = false;
 
   final prompt = suppliesSpecialist;
@@ -64,14 +64,13 @@ class _FlashCartAppState extends State<FlashCartApp> {
     }
   }
 
-  Future<void> _generateDescriptions() async {
+   Future<void> _generateDescriptions() async {
     setState(() {
-      _isLoading = true;
+      _isLoading = true; // Start loading
     });
-    _productData.clear(); //Clear previous products to prevent duplicates
 
     final imageParts = await Future.wait(
-      _images.map(processImage), // Use the extracted function
+      _images.map(processImage),
     );
 
     try {
@@ -79,25 +78,31 @@ class _FlashCartAppState extends State<FlashCartApp> {
         Content.multi([TextPart(prompt), ...imageParts]),
       ]);
 
-      final descriptions = response.text?.split('---');
-      if (descriptions != null && descriptions.length == _images.length) {
-        for (var i = 0; i < _images.length; i++) {
-          final description =
-              descriptions[i].trim(); // Get description at correct index
-          if (description
-                  .isNotEmpty && // Check if description is not empty or null
-              description != 'e') {
-            _productData.add(Product(
-              // Create a Product object directly
-              image: _images[i],
-              description: description,
-            ));
-          }
-        }
-      } else {
-        throw Exception(
-            "Error: Number of descriptions doesn't match number of images.");
+      final descriptions = response.text?.split(RegExp(r'\s*---\s*')) ?? [];
+
+      if (descriptions.length > _images.length) {
+        descriptions.removeRange(_images.length, descriptions.length);
+      } else if (descriptions.length < _images.length) {
+        final missingDescriptions = _images.length - descriptions.length;
+        descriptions.addAll(List.filled(missingDescriptions, "No description available"));
       }
+
+      final validProducts = <Product>[];  // List to store valid products
+
+      for (var i = 0; i < descriptions.length; i++) {
+        final description = descriptions[i].trim();
+        if (description.isNotEmpty && description != 'e') { // Check if description is valid
+          validProducts.add(Product(
+            image: _images[i],
+            description: description,
+          ));
+        }
+      }
+      setState(() {
+        _productData = validProducts; // Update productData with valid products
+        _isLoading = false;
+      });
+
     } catch (e) {
       // Use the Builder widget to get the correct context
       WidgetsBinding.instance.addPostFrameCallback((_) {
