@@ -10,10 +10,14 @@
 
 Your AI-Powered Shopping Companion
 
+### Disclaimer
+
+> This application was developed as a submission for the Gemini API Developer Competition. It is not intended for commercial use and is provided for demonstration purposes only.
 
 FlashCart⚡ is a Flutter app that leverages Google's Gemini AI to transform images of consumable products into a smart shopping list. 
 
-## ⚠️ Disclaimer ⚠️
+## Attention❗
+
 
 Before you run this app, please make sure to create a **vars.env** file in the root directory of this project. This file should contain your Google API key:
 
@@ -61,3 +65,8 @@ FlashCart makes your shopping experience easier by using artificial intelligence
 
 * Experiment with different lighting conditions and angles when taking photos to find what works best.
 * **Capture the Details:** When taking pictures, make sure to capture the product's brand name, logo, and any other relevant details, just like you would if you were showing the image to a salesperson to purchase the item.
+
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
