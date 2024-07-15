@@ -13,5 +13,18 @@ class Product {
     this.itemCount = 1,
   });
 
-  // TODO: Add any other methods or properties you need for Product
+  // CopyWith method to create a new Product object with modifications
+  Product copyWith({
+    XFile? image,
+    String? description,
+    bool? isPurchased,
+    int? itemCount,
+  }) {
+    return Product(
+      image: image ?? this.image, // Use the provided value or the current value
+      description: description ?? this.description,
+      isPurchased: isPurchased ?? this.isPurchased,
+      itemCount: itemCount ?? this.itemCount,
+    );
+  }
 }

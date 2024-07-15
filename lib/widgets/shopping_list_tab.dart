@@ -11,6 +11,7 @@ class ShoppingListTab extends StatelessWidget {
   final Function(int) onDeleteItem;
   final Function(int) onIncrementItemCount;
   final Function(int) onDecrementItemCount;
+  final Function(int, String) onEditDescription;
 
   final BuildContext context;
   final bool isLoading; // Receive isLoading from the parent
@@ -24,6 +25,7 @@ class ShoppingListTab extends StatelessWidget {
     required this.onDecrementItemCount,
     required this.context,
     required this.isLoading,
+    required this.onEditDescription,
   });
 
   @override
@@ -80,47 +82,88 @@ class ShoppingListTab extends StatelessWidget {
   }
 
   Widget _buildProductDetails(Product product, int index) {
-    // Changed to Product type
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(1.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MarkdownBody(
-                data: product
-                    .description), // Access properties using dot notation
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Checkbox(
-                  value: product.isPurchased,
-                  onChanged: (value) => onTogglePurchased(index),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: constraints.maxWidth),
+                child: MarkdownBody(
+                  data:
+                      product.description.isEmpty || product.description == "e"
+                          ? "No description available"
+                          : product.description,
                 ),
-                const SizedBox(width: 1),
-                Text('${product.itemCount}'),
-                Row(
-                  // Wrap buttons in a Row for better spacing
-                  children: [
-                    IconButton(
-                      // Decrement button
-                      icon: const Icon(Icons.remove),
-                      onPressed:
-                          product.itemCount > 1 // Enable only if count > 1
-                              ? () => onDecrementItemCount(index)
-                              : null,
-                    ),
-                    const SizedBox(width: 1),
-                    IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: () => onIncrementItemCount(index),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Checkbox(
+                    value: product.isPurchased,
+                    onChanged: (newValue) => onTogglePurchased(index),
+                  ),
+                  const SizedBox(width: 1),
+                  Text('${product.itemCount}'),
+                  Row(
+                    // Wrap buttons in a Row for better spacing
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.remove),
+                        onPressed: product.itemCount > 1
+                            ? () => onDecrementItemCount(index)
+                            : null,
+                      ),
+                      const SizedBox(width: 1),
+                      IconButton(
+                        icon: const Icon(Icons.add),
+                        onPressed: () => onIncrementItemCount(index),
+                      ),
+                      IconButton(
+                        // Edit Button
+                        icon: const Icon(Icons.edit),
+                        onPressed: () =>
+                            _showEditDescriptionDialog(context, product, index),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  void _showEditDescriptionDialog(
+      BuildContext context, Product product, int index) {
+    TextEditingController descriptionController =
+        TextEditingController(text: product.description);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Edit Description"),
+        content: TextField(
+          controller: descriptionController,
+          decoration: const InputDecoration(hintText: "Enter description"),
         ),
+        actions: [
+          TextButton(
+            child: const Text("Cancel"),
+            onPressed: () => Navigator.pop(context),
+          ),
+          TextButton(
+            child: const Text("Save"),
+            onPressed: () {
+              if (descriptionController.text.isNotEmpty) {
+                onEditDescription(index, descriptionController.text);
+              }
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
     );
   }

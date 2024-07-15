@@ -11,8 +11,8 @@ const String suppliesSpecialist = """You are a supplies specialist.
        - Validate the information by searching the web.
     3. **For images without a clear product:**
        - Respond with only the letter 'e'
-    4. **For images without products:**
-       - Respond with 'No product found in image.'   
+    4. **For images with products that a description can not be found:**
+       - Respond with 'No description could be generated. Please enter a description.'   
     5. **Format:**
        - Separate each product description with ONLY '---' and nothing else.
        - Do not include any additional comments or explanations.

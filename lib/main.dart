@@ -139,6 +139,12 @@ class _FlashCartAppState extends State<FlashCartApp> {
     });
   }
 
+ void _editDescription(int index, String newDescription) {
+    setState(() {
+      _productData[index] = _productData[index].copyWith(description: newDescription); 
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -203,7 +209,7 @@ class _FlashCartAppState extends State<FlashCartApp> {
                 ),
               ],
             ),
-            body: Stack(
+              body: Stack(
               children: [
                 TabBarView(
                   children: [
@@ -218,6 +224,7 @@ class _FlashCartAppState extends State<FlashCartApp> {
                       },
                       onIncrementItemCount: _incrementItemCount,
                       onDecrementItemCount: _decrementItemCount,
+                      onEditDescription: _editDescription, // Pass the callback
                       context: context,
                       isLoading: _isLoading, // Pass isLoading here
                     ),
