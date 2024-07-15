@@ -64,7 +64,7 @@ class _FlashCartAppState extends State<FlashCartApp> {
     }
   }
 
-   Future<void> _generateDescriptions() async {
+  Future<void> _generateDescriptions() async {
     setState(() {
       _isLoading = true; // Start loading
     });
@@ -84,14 +84,16 @@ class _FlashCartAppState extends State<FlashCartApp> {
         descriptions.removeRange(_images.length, descriptions.length);
       } else if (descriptions.length < _images.length) {
         final missingDescriptions = _images.length - descriptions.length;
-        descriptions.addAll(List.filled(missingDescriptions, "No description available"));
+        descriptions.addAll(
+            List.filled(missingDescriptions, "No description available"));
       }
 
-      final validProducts = <Product>[];  // List to store valid products
+      final validProducts = <Product>[]; // List to store valid products
 
       for (var i = 0; i < descriptions.length; i++) {
         final description = descriptions[i].trim();
-        if (description.isNotEmpty && description != 'e') { // Check if description is valid
+        if (description.isNotEmpty && description != 'e') {
+          // Check if description is valid
           validProducts.add(Product(
             image: _images[i],
             description: description,
@@ -102,7 +104,6 @@ class _FlashCartAppState extends State<FlashCartApp> {
         _productData = validProducts; // Update productData with valid products
         _isLoading = false;
       });
-
     } catch (e) {
       // Use the Builder widget to get the correct context
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -139,9 +140,10 @@ class _FlashCartAppState extends State<FlashCartApp> {
     });
   }
 
- void _editDescription(int index, String newDescription) {
+  void _editDescription(int index, String newDescription) {
     setState(() {
-      _productData[index] = _productData[index].copyWith(description: newDescription); 
+      _productData[index] =
+          _productData[index].copyWith(description: newDescription);
     });
   }
 
@@ -209,7 +211,7 @@ class _FlashCartAppState extends State<FlashCartApp> {
                 ),
               ],
             ),
-              body: Stack(
+            body: Stack(
               children: [
                 TabBarView(
                   children: [
@@ -278,7 +280,8 @@ class _FlashCartAppState extends State<FlashCartApp> {
 
   void _togglePurchased(int index) {
     setState(() {
-      _productData[index].isPurchased = !_productData[index].isPurchased;
+      _productData[index] = _productData[index]
+          .copyWith(isPurchased: !_productData[index].isPurchased);
     });
   }
 }

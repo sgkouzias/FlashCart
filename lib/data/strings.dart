@@ -3,7 +3,7 @@ const String suppliesSpecialist = """You are a supplies specialist.
     1. Analyze the images provided.
     2. **For each image containing a product**:
        - Identify the product.
-       - Generate a concise product description (max 40 words) including:
+       - Generate a concise product description (max 15 words) including:
           - Product name
           - Brand name (if visible)
           - Primary use or function

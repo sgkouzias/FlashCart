@@ -53,29 +53,17 @@ class ShoppingListTab extends StatelessWidget {
   }
 
   Widget _buildProductCard(Product product, int index) {
-    // Changed parameter type to Product
-    return Card(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildImageThumbnail(product),
-          _buildProductDetails(product, index),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildImageThumbnail(Product product) {
-    // Changed parameter type to Product
-    return InkWell(
-      onTap: () =>
-          _viewImageFullScreen(product.image), // Access image property directly
-      child: SizedBox(
-        width: 100, // Adjusted size for shopping list tab
-        height: 100,
-        child: Image.file(
-          File(product.image.path), // Access path from image property
-          fit: BoxFit.cover,
+// Changed parameter type to Product
+    return GestureDetector(
+// Add GestureDetector to handle taps
+      onTap: () => onTogglePurchased(index), // Call the callback when tapped
+      child: Card(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildImageThumbnail(product),
+            _buildProductDetails(product, index),
+          ],
         ),
       ),
     );
@@ -95,44 +83,67 @@ class ShoppingListTab extends StatelessWidget {
                       product.description.isEmpty || product.description == "e"
                           ? "No description available"
                           : product.description,
+                  styleSheet: MarkdownStyleSheet(
+                    p: TextStyle(
+                      decoration: product.isPurchased
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                    ),
+                  ),
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment:
+                    MainAxisAlignment.end, // Align to start and end
                 children: <Widget>[
-                  Checkbox(
-                    value: product.isPurchased,
-                    onChanged: (newValue) => onTogglePurchased(index),
+                  Text('${product.itemCount}'), // Item count at the beginning
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                        maxWidth: 25.0,
+                        maxHeight: 40.0), // Adjust size as needed
+                    child: IconButton(
+                      icon: const Icon(Icons.remove),
+                      onPressed: product.itemCount > 1
+                          ? () => onDecrementItemCount(index)
+                          : null,
+                    ),
                   ),
                   const SizedBox(width: 1),
-                  Text('${product.itemCount}'),
-                  Row(
-                    // Wrap buttons in a Row for better spacing
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.remove),
-                        onPressed: product.itemCount > 1
-                            ? () => onDecrementItemCount(index)
-                            : null,
-                      ),
-                      const SizedBox(width: 1),
-                      IconButton(
-                        icon: const Icon(Icons.add),
-                        onPressed: () => onIncrementItemCount(index),
-                      ),
-                      IconButton(
-                        // Edit Button
-                        icon: const Icon(Icons.edit),
-                        onPressed: () =>
-                            _showEditDescriptionDialog(context, product, index),
-                      ),
-                    ],
+                  ConstrainedBox(
+                    constraints:
+                        const BoxConstraints(maxWidth: 25.0, maxHeight: 40.0),
+                    child: IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: () => onIncrementItemCount(index),
+                    ),
+                  ),
+                  const SizedBox(width: 1),
+                  IconButton(
+                    icon: const Icon(Icons.edit), // Edit button
+                    onPressed: () =>
+                        _showEditDescriptionDialog(context, product, index),
                   ),
                 ],
               ),
             ],
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildImageThumbnail(Product product) {
+    // Changed parameter type to Product
+    return InkWell(
+      onTap: () =>
+          _viewImageFullScreen(product.image), // Access image property directly
+      child: SizedBox(
+        width: 60, // Adjusted size for shopping list tab
+        height: 60,
+        child: Image.file(
+          File(product.image.path), // Access path from image property
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

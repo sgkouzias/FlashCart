@@ -51,8 +51,8 @@ class PurchasedListTab extends StatelessWidget {
       onTap: () =>
           _viewImageFullScreen(product.image), // Access image property directly
       child: SizedBox(
-        width: 100, // Larger thumbnail in purchased tab
-        height: 100,
+        width: 60, // Larger thumbnail in purchased tab
+        height: 60,
         child: Image.file(
           File(product.image.path), // Access path from image property
           fit: BoxFit.cover,
