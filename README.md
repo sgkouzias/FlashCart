@@ -57,6 +57,7 @@ FlashCart makes your shopping experience easier by using artificial intelligence
 * **Error Handling:** If there's an issue with image processing or description generation (e.g., due to a poor internet connection or an unrecognized product), you'll see an error message. You can usually retry the process.
 * **Adding More Photos:** You can add more photos to your list at any time by tapping the "Add Photos" button again.
 * **Removing Photos:** If you accidentally add a photo of a product you don't want on your list, simply swipe left or right on the item to remove it.
+* **Mark Items as Purchased:** Tap on a product card in the "To Buy" tab to mark it as purchased. The product description will be crossed out with a line, and the item will be moved to the "Purchased" tab for your convenience.
 
 ## Tips:
 
