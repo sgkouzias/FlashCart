@@ -34,21 +34,20 @@ API_KEY=YOUR_API_KEY
 
 FlashCart makes your shopping experience easier by using artificial intelligence to generate product descriptions based on images. Here's how to use it:
 
-1. Adding Photos:
+1.  **Adding Photos:**
+    *   Tap the FlashCart logo at the top of the screen.
+    *   Select one or more photos of the products you want to add to your shopping list. You can select multiple images at once.
+    *   FlashCart will automatically start processing the images.
 
-* Tap the "Add Photos" button at the bottom of the screen.
-* Select one or more photos of the products you want to add to your shopping list. You can select multiple images at once.
-* FlashCart will automatically start processing the images.
+2. **Waiting for Descriptions:**
 
-2. Waiting for Descriptions:
+    *   After you select photos, the app will briefly display a loading indicator.
+    *   Please be patient while FlashCart generates descriptions for each product. This may take a few seconds depending on the number of images and the speed of your internet connection.
 
-* After you select photos, the app will briefly display a loading indicator.
-* Please be patient while FlashCart generates descriptions for each product. This may take a few seconds depending on the number of images and the speed of your internet connection.
+3. **Viewing Your Shopping List:**
 
-3. Viewing Your Shopping List:
-
-* Once the descriptions are ready, they will appear in the "To Buy" tab, along with the images you selected.
-* You can now easily check off items as you purchase them, and they will be moved to the "Purchased" tab.
+    *   Once the descriptions are ready, they will appear in the "To Buy" tab, along with the images you selected.
+    *   You can now easily check off items as you purchase them, and they will be moved to the "Purchased" tab.
 
 ## Additional Notes:
 
