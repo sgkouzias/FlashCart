@@ -245,8 +245,6 @@ class _FlashCartAppState extends State<FlashCartApp> {
                   const Center(child: CircularProgressIndicator()),
               ],
             ),
-            floatingActionButton: null,
-            floatingActionButtonLocation: null,
           ),
         ),
       ),
