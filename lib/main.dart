@@ -157,30 +157,35 @@ class _FlashCartAppState extends State<FlashCartApp> {
       theme: ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.blue,
-        // ... Customize your light theme here ...
+// ... Customize your light theme here ...
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.grey,
-        // ... Customize your dark theme here ...
+// ... Customize your dark theme here ...
       ),
       home: ScaffoldMessenger(
-        // Wrap with ScaffoldMessenger
+// Wrap with ScaffoldMessenger
         key: _scaffoldMessengerKey,
         child: DefaultTabController(
           length: 2, // Two tabs: To Buy and Purchased
           child: Scaffold(
             appBar: AppBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/logo.svg',
-                    height: 50,
-                  ),
-                  const SizedBox(width: 8),
-                  const Text('FlashCart'),
-                ],
+              title: InkWell(
+// Replace Row with InkWell
+                onTap: _pickImages, // Call _pickImages on tap
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment
+                      .center, // Center the logo-button horizontally
+                  children: [
+                    SvgPicture.asset(
+                      'assets/logo.svg',
+                      height: 50,
+                    ),
+                    const SizedBox(width: 8),
+                    const Text('FlashCart'),
+                  ],
+                ),
               ),
               bottom: const TabBar(
                 tabs: [
@@ -190,7 +195,7 @@ class _FlashCartAppState extends State<FlashCartApp> {
               ),
               actions: [
                 Consumer<ThemeProvider>(
-                  // Use Consumer to rebuild when theme changes
+// Use Consumer to rebuild when theme changes
                   builder: (context, themeProvider, child) {
                     return IconButton(
                       icon: Icon(themeProvider.isDarkMode
@@ -205,7 +210,7 @@ class _FlashCartAppState extends State<FlashCartApp> {
                 IconButton(
                   icon: const Icon(Icons.exit_to_app),
                   onPressed: () {
-                    // Exit the app
+// Exit the app
                     exit(0);
                   },
                 ),
@@ -240,26 +245,12 @@ class _FlashCartAppState extends State<FlashCartApp> {
                   const Center(child: CircularProgressIndicator()),
               ],
             ),
-            floatingActionButton: _buildFloatingActionButton(),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: null,
+            floatingActionButtonLocation: null,
           ),
         ),
       ),
     );
-  }
-
-  Widget? _buildFloatingActionButton() {
-    if (_isLoading) {
-      // Hide the button during loading
-      return null;
-    } else {
-      // Show the "add photos" button when not loading
-      return FloatingActionButton(
-        onPressed: _pickImages,
-        child: const Icon(Icons.add_a_photo),
-      );
-    }
   }
 
   // Callback to increment item count
