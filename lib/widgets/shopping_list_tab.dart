@@ -77,19 +77,15 @@ class ShoppingListTab extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: constraints.maxWidth),
-                child: MarkdownBody(
-                  data:
-                      product.description.isEmpty || product.description == "e"
-                          ? "No description available"
-                          : product.description,
-                  styleSheet: MarkdownStyleSheet(
-                    p: TextStyle(
-                      decoration: product.isPurchased
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
-                    ),
+              MarkdownBody(
+                data: product.description.isEmpty || product.description == "e"
+                    ? "No description available"
+                    : product.description,
+                styleSheet: MarkdownStyleSheet(
+                  p: TextStyle(
+                    decoration: product.isPurchased
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
                   ),
                 ),
               ),
@@ -98,25 +94,16 @@ class ShoppingListTab extends StatelessWidget {
                     MainAxisAlignment.end, // Align to start and end
                 children: <Widget>[
                   Text('${product.itemCount}'), // Item count at the beginning
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(
-                        maxWidth: 25.0,
-                        maxHeight: 40.0), // Adjust size as needed
-                    child: IconButton(
-                      icon: const Icon(Icons.remove),
-                      onPressed: product.itemCount > 1
-                          ? () => onDecrementItemCount(index)
-                          : null,
-                    ),
+                  IconButton(
+                    icon: const Icon(Icons.remove),
+                    onPressed: product.itemCount > 1
+                        ? () => onDecrementItemCount(index)
+                        : null,
                   ),
                   const SizedBox(width: 1),
-                  ConstrainedBox(
-                    constraints:
-                        const BoxConstraints(maxWidth: 25.0, maxHeight: 40.0),
-                    child: IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: () => onIncrementItemCount(index),
-                    ),
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () => onIncrementItemCount(index),
                   ),
                   const SizedBox(width: 1),
                   IconButton(
