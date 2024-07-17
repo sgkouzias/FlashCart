@@ -14,7 +14,7 @@ Your AI-Powered Shopping Companion
 
 > This application was developed as a submission for the Gemini API Developer Competition. It is not intended for commercial use and is provided for demonstration purposes only.
 
-## Attention❗
+## Attention ❗
 
 Before you run this app, please make sure to create a **vars.env** file in the root directory of this project. This file should contain your Google API key:
 
