@@ -8,8 +8,8 @@ Future<GenerativeModel> createGenerativeModel() async {
   final apiKey = dotenv.env['API_KEY'] ?? '';
 
    final generationConfig = GenerationConfig(
-    temperature: 0.95,
-    topP: 0.95,
+    temperature: 0.40,
+    topP: 0.90,
     topK: 50,
     responseMimeType: 'text/plain',
   ); 

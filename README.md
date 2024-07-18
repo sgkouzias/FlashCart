@@ -63,6 +63,7 @@ FlashCart makes your shopping experience easier by using artificial intelligence
 * Experiment with different lighting conditions and angles when taking photos to find what works best.
 * **Edit Descriptions:** You can edit the description of any product, even if it was not generated automatically or if you want to revise it. Simply tap the "Edit" button next to the item and enter your own description. This is particularly useful if FlashCart doesn't recognize a product or if you want to add more specific details.
 * **Capture the Details:** When taking pictures, make sure to capture the product's brand name, logo, and any other relevant details, just like you would if you were showing the image to a salesperson to purchase the item.
+* **One Product, One Description:** FlashCart works best with photos that focus on a single product or a package containing multiple items of the same product. Images with multiple, distinct products or no products at all will not generate descriptions and will be excluded from your list.
 
 
 ## License
